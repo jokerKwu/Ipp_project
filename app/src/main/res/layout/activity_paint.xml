@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Paint"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/pictureLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center"
+
+        >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="9"
+            android:background="@drawable/layout_background"
+            >
+            <LinearLayout
+                android:id="@+id/paintBoard"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="73dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="73dp"
+                >
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <ImageButton
+                android:id="@+id/ibBlack"
+                android:src="@drawable/icon_black"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibGray"
+                android:src="@drawable/icon_gray"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibRed"
+                android:src="@drawable/icon_red"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibOrange"
+                android:src="@drawable/icon_orange"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibYellow"
+                android:src="@drawable/icon_yellow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibGreen"
+                android:src="@drawable/icon_green"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibLime"
+                android:src="@drawable/icon_lime"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibCyan"
+                android:src="@drawable/icon_cyan"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibBlue"
+                android:src="@drawable/icon_blue"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibViolet"
+                android:src="@drawable/icon_violet"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibPerple"
+                android:src="@drawable/icon_purple"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibPink"
+                android:src="@drawable/icon_pink"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibIvory"
+                android:src="@drawable/icon_ivory"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+            <ImageButton
+                android:id="@+id/ibWhite"
+                android:src="@drawable/icon_white"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0sp"
+                android:scaleType="centerCrop"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/iconLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:layout_weight="9"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/ibZoomIn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_zoomin" />
+
+        <ImageButton
+            android:id="@+id/ibZoomOut"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_zoomout" />
+
+        <ImageButton
+            android:id="@+id/ibReturn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_return" />
+
+        <ImageButton
+            android:id="@+id/ibPencil"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_pencil" />
+
+        <ImageButton
+            android:id="@+id/ibBrush"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_brush" />
+
+        <ImageButton
+            android:id="@+id/ibErase"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_erase" />
+
+        <ImageButton
+            android:id="@+id/ibText"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_text" />
+
+        <ImageButton
+            android:id="@+id/ibRotation"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/icon_rotation" />
+    </LinearLayout>
+
+
+</LinearLayout>

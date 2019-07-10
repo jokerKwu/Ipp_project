@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/icon_list"
+        android:title="Add"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/item2"
+        android:title="Action item with icon"
+        android:icon="@drawable/icon_add"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item3"
+        android:title="Search"
+        android:icon="@drawable/icon_search"
+        app:showAsAction="always" />
+</menu>
