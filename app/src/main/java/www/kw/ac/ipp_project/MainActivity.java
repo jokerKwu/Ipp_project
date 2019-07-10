@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         memoActivityBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Memo_list.class);
+                Intent intent = new Intent(getApplicationContext(), Memo_main.class);
                 startActivity(intent);
             }
         });
