@@ -1,6 +1,7 @@
 package www.kw.ac.ipp_project;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,26 +20,34 @@ public class Memo_main extends AppCompatActivity implements View.OnClickListener
     FragmentTransaction tran;
     Memo_list memo_list;
     Memo_search memo_search;
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, "Back button pressed.", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
-    }
+    Memo_write memo_write;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_memo_main);
+
         bt1 = (Button) findViewById(R.id.bt1);
         bt2 = (Button) findViewById(R.id.bt2);
         bt3 = (Button) findViewById(R.id.bt3);
         bt1.setOnClickListener(this);
         bt2.setOnClickListener(this);
         bt3.setOnClickListener(this);
-
         memo_list = new Memo_list(); //프래그먼트 객채셍성
         memo_search=new Memo_search();
-        setFrag(0); //프래그먼트 교체
+        memo_write=new Memo_write();
+
+        setFrag(0);
     }
+    @Override
+    public void onBackPressed(){
+        Toast.makeText(getApplicationContext(),"뒤로가기 테스트",Toast.LENGTH_SHORT).show();
+        FragmentManager fm=getSupportFragmentManager();
+        fm.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View v){
         switch (v.getId()){
@@ -56,6 +65,7 @@ public class Memo_main extends AppCompatActivity implements View.OnClickListener
     public void setFrag(int n){    //프래그먼트를 교체하는 작업을 하는 메소드를 만들었습니다
         fm=getSupportFragmentManager();
         tran = fm.beginTransaction();
+
         switch (n){
             case 0:
                 tran.replace(R.id.main_frame, memo_list);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
@@ -63,11 +73,15 @@ public class Memo_main extends AppCompatActivity implements View.OnClickListener
                 tran.commit();
                 break;
             case 1:
+                tran.replace(R.id.main_frame, memo_write);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
+                tran.addToBackStack(null);
+                tran.commit();
+                break;
+            case 2:
                 tran.replace(R.id.main_frame, memo_search);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
                 tran.addToBackStack(null);
                 tran.commit();
                 break;
-
         }
     }
 }
