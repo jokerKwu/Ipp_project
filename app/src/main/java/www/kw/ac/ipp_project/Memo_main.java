@@ -9,8 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -22,11 +25,16 @@ public class Memo_main extends AppCompatActivity implements View.OnClickListener
     Memo_search memo_search;
     Memo_write memo_write;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar) ;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().hide();
         bt1 = (Button) findViewById(R.id.bt1);
         bt2 = (Button) findViewById(R.id.bt2);
         bt3 = (Button) findViewById(R.id.bt3);
@@ -38,7 +46,9 @@ public class Memo_main extends AppCompatActivity implements View.OnClickListener
         memo_write=new Memo_write();
 
         setFrag(0);
+
     }
+
     @Override
     public void onBackPressed(){
         Toast.makeText(getApplicationContext(),"뒤로가기 테스트",Toast.LENGTH_SHORT).show();
@@ -68,20 +78,46 @@ public class Memo_main extends AppCompatActivity implements View.OnClickListener
 
         switch (n){
             case 0:
+                getSupportActionBar().hide();
                 tran.replace(R.id.main_frame, memo_list);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
                 tran.addToBackStack(null);
                 tran.commit();
                 break;
             case 1:
+                getSupportActionBar().show();
                 tran.replace(R.id.main_frame, memo_write);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
                 tran.addToBackStack(null);
                 tran.commit();
                 break;
             case 2:
+                getSupportActionBar().hide();
                 tran.replace(R.id.main_frame, memo_search);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
                 tran.addToBackStack(null);
                 tran.commit();
                 break;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu) ;
+        return true ;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemBack :
+                Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_SHORT).show();
+                return true ;
+            case R.id.itemPaint :
+                Toast.makeText(getApplicationContext(),"그림판",Toast.LENGTH_SHORT).show();
+                return true ;
+            case R.id.itemCalc :
+                Toast.makeText(getApplicationContext(),"계산기",Toast.LENGTH_SHORT).show();
+                return true ;
+            default :
+                return super.onOptionsItemSelected(item) ;
         }
     }
 }

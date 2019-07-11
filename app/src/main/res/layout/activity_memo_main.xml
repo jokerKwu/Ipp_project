@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Memo_main">
-
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:id="@+id/toolbar"/>
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
@@ -22,17 +26,17 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전환1"
+            android:text="List"
             android:id="@+id/bt1"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전환2"
+            android:text="Write"
             android:id="@+id/bt2"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전환3"
+            android:text="Search"
             android:id="@+id/bt3"/>
     </LinearLayout>
 

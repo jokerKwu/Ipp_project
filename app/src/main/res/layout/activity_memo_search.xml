@@ -2,12 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E91E63">
-    <TextView
-        android:text="메모장 검색"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:orientation="vertical"
+        android:background="@drawable/memolist_background">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="여기에 입력해주세요."
+            android:id="@+id/searchEdt"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/searchList">
 
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
 
 

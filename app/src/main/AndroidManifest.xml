@@ -10,13 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Memo_write"></activity>
-        <activity android:name=".Memo_list" />
-        <activity android:name=".Paint"
-            android:screenOrientation="landscape"  />
+        <activity android:name=".Memo_search"
+        />
+        <activity android:name=".Memo_list"
+            />
+        <activity android:name=".Memo_main" />
+        <activity
+            android:name=".Paint"
+            android:screenOrientation="landscape" />
         <activity android:name=".Calc_horizontal" />
-        <activity android:name=".Calc_vertical"
+        <activity
+            android:name=".Calc_vertical"
             android:configChanges="orientation|screenSize|layoutDirection"
-            android:screenOrientation="sensor"/>
+            android:screenOrientation="sensor" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

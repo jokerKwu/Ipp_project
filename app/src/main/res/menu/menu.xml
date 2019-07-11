@@ -2,23 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item1"
-        android:icon="@drawable/icon_list"
+        android:id="@+id/itemAdd"
         android:title="Add"
         app:showAsAction="ifRoom|withText" />
     <item
-        android:id="@+id/item2"
-        android:title="Action item with icon"
-        android:icon="@drawable/icon_add"
+        android:id="@+id/itemDeleted"
+        android:title="Deleted"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/itemBack"
+        android:title="back"
+        android:icon="@drawable/icon_back"
         app:showAsAction="always" />
     <item
-        android:id="@+id/item3"
-        android:title="Search"
-        android:icon="@drawable/icon_search"
+        android:id="@+id/itemCalc"
+        android:title="Calc"
+        android:icon="@drawable/icon_calc"
         app:showAsAction="always" />
     <item
-        android:id="@+id/item4"
-        android:icon="@drawable/icon_brush"
-        android:title="text"
-        app:showAsAction="always"/>
+        android:id="@+id/itemPaint"
+        android:title="Paint"
+        android:icon="@drawable/icon_paint"
+        app:showAsAction="always" />
+
 </menu>
