@@ -9,6 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edit1"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editRes"
+        android:hint="결과"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
