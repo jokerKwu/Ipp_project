@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <LinearLayout
+    android:layout_height="match_parent"
+    tools:context=".Memo_main"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:id="@+id/toolbar"/>
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
-        android:orientation="vertical"
-        android:background="@drawable/memowrite_background">
+        android:id="@+id/title_edit"
+        android:hint="제목"
+        android:maxLines="1"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_edit"
+            android:hint="contents"
+            android:background="@android:color/transparent"/>
 
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
-
-

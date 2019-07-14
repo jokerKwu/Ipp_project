@@ -1,120 +1,145 @@
 package www.kw.ac.ipp_project;
 
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Memo_main extends AppCompatActivity implements View.OnClickListener{
-    Button bt1,bt2,bt3;
-    FragmentManager fm;
-    FragmentTransaction tran;
-    Memo_list memo_list;
-    Memo_search memo_search;
-    Memo_write memo_write;
+public class Memo_main extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_INSERT = 1000;
+    private MemoAdapter mAdapter;
     Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar) ;
+        toolbar = (Toolbar) findViewById(R.id.toolbar) ;
         setSupportActionBar(toolbar);
-        getSupportActionBar().hide();
-        bt1 = (Button) findViewById(R.id.bt1);
-        bt2 = (Button) findViewById(R.id.bt2);
-        bt3 = (Button) findViewById(R.id.bt3);
-        bt1.setOnClickListener(this);
-        bt2.setOnClickListener(this);
-        bt3.setOnClickListener(this);
-        memo_list = new Memo_list(); //프래그먼트 객채셍성
-        memo_search=new Memo_search();
-        memo_write=new Memo_write();
+        getSupportActionBar().show();
 
-        setFrag(0);
 
+        /*
+        Button fab = findViewById(R.id.memoWriteBtn);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Memo_main.this, Memo_write.class), REQUEST_CODE_INSERT);
+            }
+        });
+        */
+        ListView listView = findViewById(R.id.memo_list);
+
+        Cursor cursor=getMemoCursor();
+        mAdapter=new MemoAdapter(this,cursor);
+        listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent,View view,int position,long id){
+                Intent intent=new Intent(Memo_main.this, Memo_write.class);
+                Cursor cursor=(Cursor)mAdapter.getItem(position);
+                String title=cursor.getString(cursor.getColumnIndexOrThrow(MemoContract.MemoEntry.COLUMN_NAME_TITLE));
+                String content=cursor.getString(cursor.getColumnIndexOrThrow(MemoContract.MemoEntry.COLUMN_NAME_CONTENT));
+
+                intent.putExtra("id",id);
+                intent.putExtra("title",title);
+                intent.putExtra("content",content);
+                startActivityForResult(intent,REQUEST_CODE_INSERT);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final long deleteId=id;
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(Memo_main.this);
+                builder.setTitle("memo delete");
+                builder.setMessage("메모를 삭제하시겠습니까?");
+                builder.setPositiveButton("삭제(delete)", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SQLiteDatabase db=MemoDbHelper.getInstance(Memo_main.this).getWritableDatabase();
+                        int deletedCount = db.delete(MemoContract.MemoEntry.TABLE_NAME,MemoContract.MemoEntry._ID+"="+deleteId,null);
+                        if(deletedCount==0){
+                            Toast.makeText(Memo_main.this,"삭제 에러",Toast.LENGTH_SHORT).show();
+                        }else{
+                            mAdapter.swapCursor(getMemoCursor());
+                            Toast.makeText(Memo_main.this,"삭제 성공",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("취소",null);
+                builder.show();
+                return true;
+            }
+        });
     }
-
-    @Override
-    public void onBackPressed(){
-        Toast.makeText(getApplicationContext(),"뒤로가기 테스트",Toast.LENGTH_SHORT).show();
-        FragmentManager fm=getSupportFragmentManager();
-        fm.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
+    private Cursor getMemoCursor(){
+        MemoDbHelper dbHelper=MemoDbHelper.getInstance(this);
+        return dbHelper.getReadableDatabase().query(MemoContract.MemoEntry.TABLE_NAME,null,null,null,null,null,null);
     }
-
     @Override
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.bt1:
-                setFrag(0);
-                break;
-            case R.id.bt2:
-                setFrag(1);
-                break;
-            case R.id.bt3:
-                setFrag(2);
-                break;
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==REQUEST_CODE_INSERT&&resultCode==RESULT_OK){
+            mAdapter.swapCursor(getMemoCursor());
         }
     }
-    public void setFrag(int n){    //프래그먼트를 교체하는 작업을 하는 메소드를 만들었습니다
-        fm=getSupportFragmentManager();
-        tran = fm.beginTransaction();
-
-        switch (n){
-            case 0:
-                getSupportActionBar().hide();
-                tran.replace(R.id.main_frame, memo_list);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
-                tran.addToBackStack(null);
-                tran.commit();
-                break;
-            case 1:
-                getSupportActionBar().show();
-                tran.replace(R.id.main_frame, memo_write);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
-                tran.addToBackStack(null);
-                tran.commit();
-                break;
-            case 2:
-                getSupportActionBar().hide();
-                tran.replace(R.id.main_frame, memo_search);//replace의 매개변수는 (프래그먼트를 담을 영역 id, 프래그먼트 객체) 입니다.
-                tran.addToBackStack(null);
-                tran.commit();
-                break;
+    private static class MemoAdapter extends CursorAdapter {
+        public MemoAdapter(Context context, Cursor c){
+            super(context,c);
+        }
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent){
+            return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,parent,false);
+        }
+        @Override
+        public void bindView(View view,Context context,Cursor cursor){
+            TextView titleText=view.findViewById(android.R.id.text1);
+            titleText.setText(cursor.getString(cursor.getColumnIndexOrThrow(MemoContract.MemoEntry.COLUMN_NAME_TITLE)));
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu) ;
+        getMenuInflater().inflate(R.menu.list_menu, menu) ;
         return true ;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.itemBack :
+            case R.id.menuBack :
+                startActivityForResult(new Intent(Memo_main.this, MainActivity.class), REQUEST_CODE_INSERT);
                 Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_SHORT).show();
                 return true ;
-            case R.id.itemPaint :
-                Toast.makeText(getApplicationContext(),"그림판",Toast.LENGTH_SHORT).show();
+            case R.id.menuWrite :
+                startActivityForResult(new Intent(Memo_main.this, Memo_write.class), REQUEST_CODE_INSERT);
+                Toast.makeText(getApplicationContext(),"작성하기",Toast.LENGTH_SHORT).show();
                 return true ;
-            case R.id.itemCalc :
-                Toast.makeText(getApplicationContext(),"계산기",Toast.LENGTH_SHORT).show();
+            case R.id.menuDraw :
+                Toast.makeText(getApplicationContext(),"그리기",Toast.LENGTH_SHORT).show();
                 return true ;
             default :
                 return super.onOptionsItemSelected(item) ;

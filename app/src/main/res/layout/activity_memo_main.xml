@@ -11,11 +11,20 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:id="@+id/toolbar"/>
-    <FrameLayout
-        android:id="@+id/main_frame"
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="9"/>
+        android:id="@+id/memoSearch"
+        android:background="#75808080">
+
+    </SearchView>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/memo_list">
+        </ListView>
+
 
     <LinearLayout
         android:layout_width="match_parent"

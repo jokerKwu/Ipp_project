@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuBack"
+        android:title="back"
+        android:icon="@drawable/icon_back"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuWrite"
+        android:title="Write"
+        android:icon="@drawable/icon_main_write"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuDraw"
+        android:title="Draw"
+        android:icon="@drawable/icon_main_draw"
+        app:showAsAction="always" />
+</menu>
