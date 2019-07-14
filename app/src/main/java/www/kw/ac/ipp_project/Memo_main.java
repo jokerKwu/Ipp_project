@@ -37,16 +37,6 @@ public class Memo_main extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().show();
 
-
-        /*
-        Button fab = findViewById(R.id.memoWriteBtn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(Memo_main.this, Memo_write.class), REQUEST_CODE_INSERT);
-            }
-        });
-        */
         ListView listView = findViewById(R.id.memo_list);
 
         Cursor cursor=getMemoCursor();
@@ -139,6 +129,7 @@ public class Memo_main extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"작성하기",Toast.LENGTH_SHORT).show();
                 return true ;
             case R.id.menuDraw :
+                startActivityForResult(new Intent(Memo_main.this, MemoPaint.class), REQUEST_CODE_INSERT);
                 Toast.makeText(getApplicationContext(),"그리기",Toast.LENGTH_SHORT).show();
                 return true ;
             default :

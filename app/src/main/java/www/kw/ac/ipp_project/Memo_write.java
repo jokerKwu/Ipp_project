@@ -105,6 +105,7 @@ public class Memo_write extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_SHORT).show();
                 return true ;
             case R.id.itemPaint :
+                startActivityForResult(new Intent(Memo_write.this, MemoPaint.class), REQUEST_CODE_INSERT);
                 Toast.makeText(getApplicationContext(),"그림판",Toast.LENGTH_SHORT).show();
                 return true ;
             case R.id.itemCalc :
