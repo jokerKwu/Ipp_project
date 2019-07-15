@@ -15,6 +15,12 @@
         android:icon="@drawable/icon_back"
         app:showAsAction="always" />
     <item
+        android:id="@+id/itemSave"
+        android:title="save"
+        android:icon="@drawable/icon_save"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/itemCalc"
         android:title="Calc"
         android:icon="@drawable/icon_calc"

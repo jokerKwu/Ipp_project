@@ -15,17 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title_edit"
-        android:hint="제목"
+        android:hint="제목을 작성해주세요."
         android:maxLines="1"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray">
+        android:background="#C8E4E1E1">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/content_edit"
-            android:hint="contents"
+            android:hint="내용을 작성해주세요."
             android:background="@android:color/transparent"/>
 
     </ScrollView>

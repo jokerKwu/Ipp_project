@@ -67,7 +67,7 @@ public class Memo_write extends AppCompatActivity {
                 Toast.makeText(this,"저장 오류",Toast.LENGTH_SHORT).show();
                 return false;
             }else if(title.length()!=0||contents.length()!=0){
-                Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 return true;
             }
@@ -101,9 +101,13 @@ public class Memo_write extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemBack :
+                memoSave();
                 startActivityForResult(new Intent(Memo_write.this, Memo_main.class), REQUEST_CODE_INSERT);
-                Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_SHORT).show();
                 return true ;
+            case R.id.itemSave:
+                if(memoSave()==true)
+                    startActivityForResult(new Intent(Memo_write.this, Memo_main.class), REQUEST_CODE_INSERT);
+                return true;
             case R.id.itemPaint :
                 startActivityForResult(new Intent(Memo_write.this, MemoPaint.class), REQUEST_CODE_INSERT);
                 Toast.makeText(getApplicationContext(),"그림판",Toast.LENGTH_SHORT).show();

@@ -18,18 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        Button calcActivityBtn=(Button)findViewById(R.id.calcActivityBtn);
         Button memoActivityBtn=(Button)findViewById(R.id.memoActivityBtn);
-        Button paintActivityBtn=(Button)findViewById(R.id.paintActivityBtn);
-
-        calcActivityBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(),Calc_vertical.class);
-                startActivity(intent);
-            }
-        });
 
         memoActivityBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -39,13 +28,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        paintActivityBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MemoPaint.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
