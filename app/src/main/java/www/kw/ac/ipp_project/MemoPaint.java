@@ -1,20 +1,30 @@
 package www.kw.ac.ipp_project;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MemoPaint extends AppCompatActivity {
     //그리기 뷰 전역 변수.
     private Memo_drawLine drawLine = null;
+    public static float mStrokeWidth = 1;
+    public static int mStrokeColor = Color.BLACK;
+    public static int mCurrentColor = Color.WHITE;
 
+    Toolbar paint_toolbar;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -24,6 +34,9 @@ public class MemoPaint extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
         setContentView(R.layout.activity_memo_paint);
+        paint_toolbar=(Toolbar)findViewById(R.id.paint_toolbar);
+        setSupportActionBar(paint_toolbar);
+
     }
 
     @Override
@@ -48,60 +61,103 @@ public class MemoPaint extends AppCompatActivity {
                 llCanvas.addView(drawLine);
             }
 
-            //이건.. 상단 메뉴(RED, BLUE ~~~)버튼 설정...
-            //일단 초기값은 0번(RED)으로.. ^^
+
             resetCurrentMode(0);
         }
 
         super.onWindowFocusChanged(hasFocus);
     }
 
-    //코딩 하기 쉽게 하기 위해서.. 사용할 상단 메뉴 버튼들의 아이디를 배열에 넣는다..
-    private int[] btns = {R.id.btnRED, R.id.btnBLUE, R.id.btnGREEN, R.id.btnBLACK};
-    //코딩 하기 쉽게 하기 위해서.. 상단 메뉴 버튼의 배열과 똑같이 실제 색상값을 배열로 만든다.
-    private int[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.BLACK};
 
-    //선택한 색상에 맞도록 버튼의 배경색과 글자색을 바꾸고, 그리기 뷰에도 알려 준다.
+    private int[] btns = {R.id.btnRED, R.id.btnBLUE, R.id.btnGREEN, R.id.btnBLACK,R.id.btnYELLOW,R.id.btnPURPLE,R.id.btnGRAY,
+    R.id.btnPINK,R.id.btnORANGE};
+
+    private int[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.BLACK,Color.rgb(255,255,0),
+    Color.rgb(128,0,128),Color.rgb(128,128,128),Color.rgb(255,192,203),
+            Color.rgb(255,165,0)};
+
+
     private void resetCurrentMode(int curMode)
     {
         for(int i=0;i<btns.length;i++)
         {
-            //이건.. 배열 뒤지면서... 버튼이 있는지 체크..
+
             ImageButton btn = (ImageButton)findViewById(btns[i]);
             if(btn != null)
             {
-                //버튼 있으면 배경색과 글자색 변경..
-                //만약 선택한 버튼값과 찾은 버튼이 동일하면 회색배경에 흰색글자 버튼으로 변경.
-                //동일하지 않으면 흰색배경에 회색글자 버튼으로 변경.
                 btn.setBackgroundColor(i==curMode?0xff555555:0xffffffff);
             }
         }
-
-        //만약 그리기 뷰가 초기화 되었으면, 그리기 뷰에 글자색을 알려줌..
-        if(drawLine != null) drawLine.setLineColor(colors[curMode]);
+        if(drawLine != null) {
+            drawLine.setLineColor(colors[curMode]);
+            mCurrentColor=curMode;
+        }
     }
 
-    //버튼을 클릭했을때 호출 되는 함수.
-    //이 함수가 호출될때 어떤 버튼(뷰)에서 호출했는지를 같이 알려준다.
-    //버튼 클릭시 이 함수를 호출 하게 하기 위해서는...
-    //main.xml에서
-    //<Button ~~~~ android:onClick="btnClick" ~~~~ />
-    //이렇게 btnClick이라는 함수명을 넣어 줘야함.
     public void btnClick(View view)
     {
         if(view == null) return;
 
         for(int i=0;i<btns.length;i++)
         {
-            //배열 뒤지면서 클릭한 버튼이 있는지 확인..
             if(btns[i] == view.getId())
             {
-                //만약 선택한 버튼이 있으면.. 버튼모양 및 그리기 뷰 설정을 하기 위해서 함수 호출..
                 resetCurrentMode(i);
-
-                //더이상 처리를 할 필요가 없으니까.. for문을 빠져 나옴..
                 break;
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        //선굵기,색깔,바탕색 변경 메뉴 추가
+        SubMenu subMenu = menu.addSubMenu(0, 0, 0, "선굵기");
+        subMenu.add(1, 1, 0, "얇은 선");
+        subMenu.add(1, 2, 1, "중간 선");
+        subMenu.add(1, 3, 2, "굵은 선");
+        subMenu.setGroupCheckable(1, true, true);
+        getMenuInflater().inflate(R.menu.paint_menu, menu);
+        return true ;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1:
+                mStrokeWidth = 1;
+                drawLine.setPenWidth(colors[mCurrentColor],1);
+                return true;
+            case 2:
+                mStrokeWidth = 3;
+                drawLine.setPenWidth(colors[mCurrentColor],3);
+                return true;
+            case 3:
+                mStrokeWidth = 5;
+                drawLine.setPenWidth(colors[mCurrentColor],5);
+                return true;
+            case R.id.item_back_yellow:
+                drawLine.setBackgroundColor(1);
+                return true;
+            case R.id.item_back_white:
+                drawLine.setBackgroundColor(2);
+                return true;
+            case R.id.item_back_green:
+                drawLine.setBackgroundColor(3);
+                return true;
+            case R.id.item_clear:
+                drawLine.setClear();
+                return true;
+            case R.id.itemBack:
+                startActivityForResult(new Intent(MemoPaint.this, Memo_main.class), 1000);
+                return true;
+            case R.id.itemSave:
+                Toast.makeText(getApplicationContext(),"저장 완료",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.group2:
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

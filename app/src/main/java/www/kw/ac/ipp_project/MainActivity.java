@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         paintActivityBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Paint.class);
+                Intent intent = new Intent(getApplicationContext(), MemoPaint.class);
                 startActivity(intent);
             }
         });

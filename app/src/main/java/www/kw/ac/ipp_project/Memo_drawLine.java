@@ -1,11 +1,13 @@
 package www.kw.ac.ipp_project;
-
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +34,9 @@ public class Memo_drawLine extends View
     //마우스 포인터(손가락)이 가장 마지막에 위치한 y좌표값 기억용 변수.
     private float   oldY;
 
+    //현재 배경색 저장
+    private int curBackcolor;
+
     /**
      * 생성자.. new DrawLine(this, rect) 하면 여기가 호출됨.
      * @param context   Context객체
@@ -49,6 +54,9 @@ public class Memo_drawLine extends View
 
         //경로 초기화.
         path = new Path();
+
+        //배경색 초기화
+        curBackcolor=2;
     }
 
     @Override
@@ -150,8 +158,37 @@ public class Memo_drawLine extends View
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setAntiAlias(true);
     }
+    public void setPenWidth(int color,int width){
+        paint = new Paint();
+        paint.setColor(color);
 
-
+        paint.setAlpha(255);
+        paint.setDither(true);
+        paint.setStrokeWidth(width);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setAntiAlias(true);
+    }
+    public void setClear(){
+        setBackgroundColor(curBackcolor);
+    }
+    public void setBackgroundColor(int color){
+        switch(color){
+            case 1:
+                canvas.drawColor(Color.YELLOW);
+                curBackcolor=1;
+                break;
+            case 2:
+                canvas.drawColor(Color.WHITE);
+                curBackcolor=2;
+                break;
+            case 3:
+                canvas.drawColor(Color.GREEN);
+                curBackcolor=3;
+                break;
+        }
+    }
     public Memo_drawLine(Context context)
     {
         super(context);

@@ -10,10 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Memo_write"></activity>
-        <activity android:name=".Memo_search"
-        />
-        <activity android:name=".Memo_list"
-            />
+        <activity android:name=".MemoPaint"></activity>
         <activity android:name=".Memo_main" />
         <activity
             android:name=".Paint"

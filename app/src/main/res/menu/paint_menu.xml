@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itemBack"
+        android:title="back"
+        android:icon="@drawable/icon_back"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemSave"
+        android:title="back"
+        android:icon="@drawable/icon_save"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item2"
+        android:title="바탕색">
+        <menu>
+            <group android:id="@+id/group2" android:checkableBehavior="single">
+                <item
+                    android:id="@+id/item_back_yellow"
+                    android:orderInCategory="0"
+                    android:title="노란색"/>
+                <item
+                    android:id="@+id/item_back_white"
+                    android:orderInCategory="1"
+                    android:title="하얀색"/>
+                <item
+                    android:id="@+id/item_back_green"
+                    android:orderInCategory="2"
+                    android:title="녹색"/>
+            </group>
+        </menu>
+    </item>
+    <item android:id="@+id/item_clear" android:title="지우기"></item>
+</menu>

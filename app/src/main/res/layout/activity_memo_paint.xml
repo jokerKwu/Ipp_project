@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:id="@+id/paint_toolbar"/>
     <LinearLayout
         android:id="@+id/llMenu"
         android:layout_width="match_parent"
@@ -47,6 +51,55 @@
             android:src="@drawable/icon_black"
             android:padding="0sp"
             android:scaleType="centerCrop"/>
+        <ImageButton
+            android:id="@+id/btnYELLOW"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="btnClick"
+            android:src="@drawable/icon_yellow"
+            android:padding="0sp"
+            android:scaleType="centerCrop"/>
+        <ImageButton
+            android:id="@+id/btnPURPLE"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="btnClick"
+            android:src="@drawable/icon_purple"
+            android:padding="0sp"
+            android:scaleType="centerCrop"/>
+        <ImageButton
+            android:id="@+id/btnWHITE"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="btnClick"
+            android:src="@drawable/icon_white"
+            android:padding="0sp"
+            android:scaleType="centerCrop"/>
+        <ImageButton
+            android:id="@+id/btnORANGE"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="btnClick"
+            android:src="@drawable/icon_orange"
+            android:padding="0sp"
+            android:scaleType="centerCrop"/>
+        <ImageButton
+            android:id="@+id/btnPINK"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="btnClick"
+            android:src="@drawable/icon_pink"
+            android:padding="0sp"
+            android:scaleType="centerCrop"/>
+        <ImageButton
+            android:id="@+id/btnGRAY"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="btnClick"
+            android:src="@drawable/icon_gray"
+            android:padding="0sp"
+            android:scaleType="centerCrop"/>
+
     </LinearLayout>
 
     <LinearLayout
