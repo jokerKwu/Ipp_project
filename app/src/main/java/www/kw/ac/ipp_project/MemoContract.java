@@ -6,5 +6,6 @@ public class MemoContract {
         public static final String TABLE_NAME="memo";
         public static final String COLUMN_NAME_TITLE="title";
         public static final String COLUMN_NAME_CONTENT="content";
+        public static final String COLUMN_NAME_DATE="date";
     }
 }
