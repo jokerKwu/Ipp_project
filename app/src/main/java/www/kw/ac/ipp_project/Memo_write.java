@@ -1,6 +1,7 @@
 package www.kw.ac.ipp_project;
 
 import android.app.Activity;
+import android.icu.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.sql.Date;
 
 public class Memo_write extends AppCompatActivity {
     String TAG="info";
@@ -46,8 +49,10 @@ public class Memo_write extends AppCompatActivity {
             String title=intent.getStringExtra("title");
             String content=intent.getStringExtra("content");
 
+
             mTitleEditText.setText(title);
             mContentEditText.setText(content);
+
         }
         //메인......
 /*
@@ -96,10 +101,16 @@ public class Memo_write extends AppCompatActivity {
     public boolean memoSave(){
         String title=mTitleEditText.getText().toString();
         String contents=mContentEditText.getText().toString();
+
+        long now=System.currentTimeMillis();
+        Date date=new Date(now);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String getTime=sdf.format(date);
+
         ContentValues contentValues=new ContentValues();
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_TITLE,title);
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENT,contents);
-
+        contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_DATE,getTime);
         SQLiteDatabase db=MemoDbHelper.getInstance(this).getWritableDatabase();
         getSupportActionBar().hide();
         if(mMemold==-1){
@@ -108,7 +119,7 @@ public class Memo_write extends AppCompatActivity {
                 Toast.makeText(this,"저장 오류",Toast.LENGTH_SHORT).show();
                 return false;
             }else if(title.length()!=0||contents.length()!=0){
-                Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 return true;
             }
