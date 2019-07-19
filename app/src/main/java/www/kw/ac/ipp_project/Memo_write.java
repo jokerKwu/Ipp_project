@@ -1,6 +1,7 @@
 package www.kw.ac.ipp_project;
 
 import android.app.Activity;
+import android.icu.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Date;
+
 public class Memo_write extends AppCompatActivity {
     String TAG="info";
     private EditText mTitleEditText;
@@ -23,6 +26,7 @@ public class Memo_write extends AppCompatActivity {
     private long mMemold=-1;
     Toolbar toolbar;
     public static final int REQUEST_CODE_INSERT = 1000;
+    public static final int REQUEST_CODE_CALC=500;
     int backint=0;
     private Thread thread; //
 
@@ -39,7 +43,6 @@ public class Memo_write extends AppCompatActivity {
 
 
 
-
         Intent intent=getIntent();
         if(intent!=null){
             mMemold=intent.getLongExtra("id",-1);
@@ -49,6 +52,8 @@ public class Memo_write extends AppCompatActivity {
             mTitleEditText.setText(title);
             mContentEditText.setText(content);
         }
+
+
         //메인......
 /*
         thread =new Thread(){
@@ -68,6 +73,15 @@ public class Memo_write extends AppCompatActivity {
 */
     }
 
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent intent){
+        if(requestCode==REQUEST_CODE_CALC){
+            if(resultCode==RESULT_OK){
+                String resultCalcValue=intent.getStringExtra("calcRes");
+                mContentEditText.append(resultCalcValue);
+            }
+        }
+    }
 
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
@@ -96,9 +110,16 @@ public class Memo_write extends AppCompatActivity {
     public boolean memoSave(){
         String title=mTitleEditText.getText().toString();
         String contents=mContentEditText.getText().toString();
+
+        long now=System.currentTimeMillis();
+        Date date=new Date(now);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String getTime=sdf.format(date);
+
         ContentValues contentValues=new ContentValues();
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_TITLE,title);
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENT,contents);
+        contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_DATE,getTime);
 
         SQLiteDatabase db=MemoDbHelper.getInstance(this).getWritableDatabase();
         getSupportActionBar().hide();
@@ -159,9 +180,9 @@ public class Memo_write extends AppCompatActivity {
                 finish();
                 return true ;
             case R.id.itemCalc :
-                startActivity(new Intent(Memo_write.this, Calc_vertical.class));
+                startActivityForResult(new Intent(Memo_write.this, Calc_vertical.class),REQUEST_CODE_CALC);
                 Toast.makeText(getApplicationContext(),"계산기",Toast.LENGTH_SHORT).show();
-                finish();
+
                 return true ;
             case R.id.itemAdd:
                 if(memoSave()==true)

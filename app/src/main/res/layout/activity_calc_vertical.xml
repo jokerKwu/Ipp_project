@@ -186,12 +186,11 @@
             android:text="0"
             />
         <Button
-            android:onClick="onClick"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/btnDot"
-            android:text="."
+            android:id="@+id/btnUse"
+            android:text="값 사용"
             />
         <Button
             android:onClick="onClick"
@@ -202,5 +201,4 @@
             android:text="="
             />
     </LinearLayout>
-
 </LinearLayout>

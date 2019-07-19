@@ -34,7 +34,6 @@ public class Memo_main extends AppCompatActivity {
         setContentView(R.layout.activity_memo_main);
 
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar) ;
         setSupportActionBar(toolbar);
         getSupportActionBar().show();
@@ -104,8 +103,6 @@ public class Memo_main extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode==REQUEST_CODE_INSERT&&resultCode==RESULT_OK){
             mAdapter.swapCursor(getMemoCursor());
-
-
         }
     }
 
@@ -116,12 +113,14 @@ public class Memo_main extends AppCompatActivity {
         }
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent){
-            return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,parent,false);
+            return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_2,parent,false);
         }
         @Override
         public void bindView(View view,Context context,Cursor cursor){
             TextView titleText=view.findViewById(android.R.id.text1);
             titleText.setText(cursor.getString(cursor.getColumnIndexOrThrow(MemoContract.MemoEntry.COLUMN_NAME_TITLE)));
+            TextView dateText=view.findViewById(android.R.id.text2);
+            dateText.setText("update date : "+cursor.getString(cursor.getColumnIndexOrThrow(MemoContract.MemoEntry.COLUMN_NAME_DATE)));
         }
     }
 

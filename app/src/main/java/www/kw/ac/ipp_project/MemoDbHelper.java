@@ -9,15 +9,16 @@ public class MemoDbHelper extends SQLiteOpenHelper {
     private static MemoDbHelper sInstance;
 
     public static final int DB_VERSION=1;
-    public static final String DB_NAME="Memo.db";
+    public static final String DB_NAME="Memo11.db";
     public static final String SQL_CREATE_ENTERS=
             String.format(
-                    "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT,%s TEXT)",
+                    "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT,%s TEXT,%s TEXT)",
                     MemoContract.MemoEntry.TABLE_NAME,
                     MemoContract.MemoEntry._ID,
                     MemoContract.MemoEntry.COLUMN_NAME_TITLE,
-                    MemoContract.MemoEntry.COLUMN_NAME_CONTENT
-                    );
+                    MemoContract.MemoEntry.COLUMN_NAME_CONTENT,
+                    MemoContract.MemoEntry.COLUMN_NAME_DATE
+            );
     public static final String SQL_DELETE_ENTERS=
             "DROP TABLE IF EXISTS "+MemoContract.MemoEntry.TABLE_NAME;
 
