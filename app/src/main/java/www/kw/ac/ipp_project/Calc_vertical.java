@@ -1,5 +1,6 @@
 package www.kw.ac.ipp_project;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +13,18 @@ import android.widget.Toast;
 
 public class Calc_vertical extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_CALC=500;
+
+
     private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button0;
-    private Button buttonadd, buttondiv, buttonmul, buttonsub, buttonresult, buttonclear;
+    private Button buttonadd, buttondiv, buttonmul, buttonsub, buttonresult, buttonclear,buttonuse;
 
     private TextView text;
     private EditText edit;
 
     private int a;
     private int where = 0;
+
 
     private boolean usingCalc;
     @Override
@@ -43,6 +48,7 @@ public class Calc_vertical extends AppCompatActivity {
         buttondiv = (Button) findViewById(R.id.btnDiv);
         buttonresult = (Button) findViewById(R.id.btnRes);
         buttonclear = (Button) findViewById(R.id.btnAC);
+        buttonuse=(Button)findViewById(R.id.btnUse);
 
         //rrvb
         text = (TextView) findViewById(R.id.edit1);
@@ -51,6 +57,21 @@ public class Calc_vertical extends AppCompatActivity {
         edit = (EditText) findViewById(R.id.editRes);
 
         usingCalc=false;
+
+        buttonuse.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(edit.getText().length()==0){
+                    Toast.makeText(getApplicationContext(),"결과 값이 없습니다.",Toast.LENGTH_SHORT).show();
+                }else{
+                    String calcRes=edit.getText().toString();
+                    Intent calcIntent=new Intent();
+                    calcIntent.putExtra("calcRes",calcRes);
+                    setResult(RESULT_OK,calcIntent);
+                    finish();
+                }
+            }
+        });
 
         OnClickListener cl = new OnClickListener() {
 
@@ -125,10 +146,8 @@ public class Calc_vertical extends AppCompatActivity {
 
                     where = 4;
                 }
-
                 //결과부분
                 else if (v == buttonresult) {
-
 
 
                     //더하기
@@ -151,7 +170,6 @@ public class Calc_vertical extends AppCompatActivity {
                         a = a / Integer.valueOf(edit.getText().toString().trim());
                         edit.setText(Integer.toString(a));
                     }
-
 
                     if(usingCalc==true){
                         text.setText(text.getText().toString()+" = "+edit.getText().toString());

@@ -34,7 +34,6 @@ public class Memo_main extends AppCompatActivity {
         setContentView(R.layout.activity_memo_main);
 
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar) ;
         setSupportActionBar(toolbar);
         getSupportActionBar().show();

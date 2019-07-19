@@ -26,6 +26,7 @@ public class Memo_write extends AppCompatActivity {
     private long mMemold=-1;
     Toolbar toolbar;
     public static final int REQUEST_CODE_INSERT = 1000;
+    public static final int REQUEST_CODE_CALC=500;
     int backint=0;
     private Thread thread; //
 
@@ -42,7 +43,6 @@ public class Memo_write extends AppCompatActivity {
 
 
 
-
         Intent intent=getIntent();
         if(intent!=null){
             mMemold=intent.getLongExtra("id",-1);
@@ -54,6 +54,8 @@ public class Memo_write extends AppCompatActivity {
             mContentEditText.setText(content);
 
         }
+
+
         //메인......
 /*
         thread =new Thread(){
@@ -73,6 +75,15 @@ public class Memo_write extends AppCompatActivity {
 */
     }
 
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent intent){
+        if(requestCode==REQUEST_CODE_CALC){
+            if(resultCode==RESULT_OK){
+                String resultCalcValue=intent.getStringExtra("calcRes");
+                mContentEditText.append(resultCalcValue);
+            }
+        }
+    }
 
     private Handler handler=new Handler(){
         public void handleMessage(Message msg){
@@ -111,6 +122,7 @@ public class Memo_write extends AppCompatActivity {
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_TITLE,title);
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENT,contents);
         contentValues.put(MemoContract.MemoEntry.COLUMN_NAME_DATE,getTime);
+
         SQLiteDatabase db=MemoDbHelper.getInstance(this).getWritableDatabase();
         getSupportActionBar().hide();
         if(mMemold==-1){
@@ -170,9 +182,9 @@ public class Memo_write extends AppCompatActivity {
                 finish();
                 return true ;
             case R.id.itemCalc :
-                startActivity(new Intent(Memo_write.this, Calc_vertical.class));
+                startActivityForResult(new Intent(Memo_write.this, Calc_vertical.class),REQUEST_CODE_CALC);
                 Toast.makeText(getApplicationContext(),"계산기",Toast.LENGTH_SHORT).show();
-                finish();
+
                 return true ;
             case R.id.itemAdd:
                 if(memoSave()==true)
