@@ -11,23 +11,36 @@ import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Memo_main extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+ public class Memo_main extends AppCompatActivity {
 
     public static final int REQUEST_CODE_INSERT = 1000;
     private MemoAdapter mAdapter;
+    private static List<String> list;
+
+
     Toolbar toolbar;
+    EditText memo_search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +52,8 @@ public class Memo_main extends AppCompatActivity {
         getSupportActionBar().show();
 
         ListView listView = findViewById(R.id.memo_list);
+
+        list=new ArrayList<String>();
 
         Cursor cursor=getMemoCursor();
         mAdapter=new MemoAdapter(this,cursor);
@@ -68,6 +83,8 @@ public class Memo_main extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final long deleteId=id;
 
+                Toast.makeText(getApplicationContext(),Integer.toString(list.size()),Toast.LENGTH_SHORT).show();
+
                 AlertDialog.Builder builder=new AlertDialog.Builder(Memo_main.this);
                 builder.setTitle("memo delete");
                 builder.setMessage("메모를 삭제하시겠습니까?");
@@ -90,7 +107,6 @@ public class Memo_main extends AppCompatActivity {
             }
         });
     }
-
 
     private Cursor getMemoCursor(){
         MemoDbHelper dbHelper=MemoDbHelper.getInstance(this);
