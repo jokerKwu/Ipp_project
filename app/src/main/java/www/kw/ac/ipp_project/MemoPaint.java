@@ -152,6 +152,8 @@ public class MemoPaint extends AppCompatActivity {
                 startActivityForResult(new Intent(MemoPaint.this, Memo_main.class), 1000);
                 return true;
             case R.id.itemSave:
+
+
                 Toast.makeText(getApplicationContext(),"저장 완료",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.group2:

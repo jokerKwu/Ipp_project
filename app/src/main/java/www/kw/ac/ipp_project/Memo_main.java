@@ -1,4 +1,4 @@
-package www.kw.ac.ipp_project;
+ package www.kw.ac.ipp_project;
 
 
 import android.content.Context;
@@ -33,6 +33,8 @@ public class Memo_main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo_main);
 
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar) ;
         setSupportActionBar(toolbar);
         getSupportActionBar().show();
@@ -43,6 +45,8 @@ public class Memo_main extends AppCompatActivity {
         mAdapter=new MemoAdapter(this,cursor);
         listView.setAdapter(mAdapter);
 
+
+        //클릭하면 해당 메모 작성 자바 파일로 이동 하는 이벤트 리스너
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent,View view,int position,long id){
@@ -58,6 +62,8 @@ public class Memo_main extends AppCompatActivity {
             }
         });
 
+
+        //클릭을 길게하면 메모를 삭제하는 이벤트 리스너 추가
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,17 +91,25 @@ public class Memo_main extends AppCompatActivity {
             }
         });
     }
+
+
     private Cursor getMemoCursor(){
         MemoDbHelper dbHelper=MemoDbHelper.getInstance(this);
         return dbHelper.getReadableDatabase().query(MemoContract.MemoEntry.TABLE_NAME,null,null,null,null,null,null);
     }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode==REQUEST_CODE_INSERT&&resultCode==RESULT_OK){
             mAdapter.swapCursor(getMemoCursor());
+
+
         }
     }
+
+
     private static class MemoAdapter extends CursorAdapter {
         public MemoAdapter(Context context, Cursor c){
             super(context,c);
@@ -121,16 +135,19 @@ public class Memo_main extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuBack :
-                startActivityForResult(new Intent(Memo_main.this, MainActivity.class), REQUEST_CODE_INSERT);
+                startActivity(new Intent(Memo_main.this, MainActivity.class));
                 Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_SHORT).show();
+                finish();
                 return true ;
             case R.id.menuWrite :
-                startActivityForResult(new Intent(Memo_main.this, Memo_write.class), REQUEST_CODE_INSERT);
+                startActivity(new Intent(Memo_main.this, Memo_write.class));
                 Toast.makeText(getApplicationContext(),"작성하기",Toast.LENGTH_SHORT).show();
+                finish();
                 return true ;
             case R.id.menuDraw :
-                startActivityForResult(new Intent(Memo_main.this, MemoPaint.class), REQUEST_CODE_INSERT);
+                startActivity(new Intent(Memo_main.this, MemoPaint.class));
                 Toast.makeText(getApplicationContext(),"그리기",Toast.LENGTH_SHORT).show();
+                finish();
                 return true ;
             default :
                 return super.onOptionsItemSelected(item) ;

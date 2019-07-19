@@ -1,35 +1,30 @@
 package www.kw.ac.ipp_project;
 
-import android.icu.text.UnicodeSetSpanner;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 public class Memo_write extends AppCompatActivity {
+    String TAG="info";
     private EditText mTitleEditText;
     private EditText mContentEditText;
     private long mMemold=-1;
     Toolbar toolbar;
     public static final int REQUEST_CODE_INSERT = 1000;
+    int backint=0;
+    private Thread thread; //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +37,9 @@ public class Memo_write extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().show();
 
+
+
+
         Intent intent=getIntent();
         if(intent!=null){
             mMemold=intent.getLongExtra("id",-1);
@@ -51,7 +49,50 @@ public class Memo_write extends AppCompatActivity {
             mTitleEditText.setText(title);
             mContentEditText.setText(content);
         }
+        //메인......
+/*
+        thread =new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    try{
+                        sleep(10000);
+                    }catch(InterruptedException e){
+                        thread.interrupt();
+                    }
+                    handler.sendEmptyMessage(0);
+                }
+            }
+        };
+        thread.start();
+*/
     }
+
+
+    private Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            if(msg.what==0){
+                autoMemoSave();
+            }
+        }
+    };
+
+    public void autoMemoSave(){
+        Toast.makeText(getApplicationContext(),"자동저장 테스트",Toast.LENGTH_SHORT).show();
+    }
+
+
+    /***
+     * 액티비티가 죽게되거나 finish() 가 호출될때 이곳을 수행한다.
+     */
+    @Override
+    protected void onDestroy() {
+            super.onDestroy();
+      // thread.interrupt(); // 스레드를 죽여버리는 구문이다. 이 구문을 사용하려면 스레드의 try catch문에서 this.interrupt를 시켜줘야한다.
+       Log.i(TAG,"onDestory");
+
+    }
+
     public boolean memoSave(){
         String title=mTitleEditText.getText().toString();
         String contents=mContentEditText.getText().toString();
@@ -90,6 +131,8 @@ public class Memo_write extends AppCompatActivity {
     public void onBackPressed(){
         memoSave();
         super.onBackPressed();
+        startActivity(new Intent(Memo_write.this, Memo_main.class) );
+        finish();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,23 +145,28 @@ public class Memo_write extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.itemBack :
                 memoSave();
-                startActivityForResult(new Intent(Memo_write.this, Memo_main.class), REQUEST_CODE_INSERT);
+                startActivity(new Intent(Memo_write.this, Memo_main.class));
+                finish();
                 return true ;
             case R.id.itemSave:
-                if(memoSave()==true)
-                    startActivityForResult(new Intent(Memo_write.this, Memo_main.class), REQUEST_CODE_INSERT);
+                memoSave();
+                startActivity(new Intent(Memo_write.this, Memo_main.class) );
+                finish();
                 return true;
             case R.id.itemPaint :
-                startActivityForResult(new Intent(Memo_write.this, MemoPaint.class), REQUEST_CODE_INSERT);
+                startActivity(new Intent(Memo_write.this, MemoPaint.class) );
                 Toast.makeText(getApplicationContext(),"그림판",Toast.LENGTH_SHORT).show();
+                finish();
                 return true ;
             case R.id.itemCalc :
-                startActivityForResult(new Intent(Memo_write.this, Calc_vertical.class), REQUEST_CODE_INSERT);
+                startActivity(new Intent(Memo_write.this, Calc_vertical.class));
                 Toast.makeText(getApplicationContext(),"계산기",Toast.LENGTH_SHORT).show();
+                finish();
                 return true ;
             case R.id.itemAdd:
                 if(memoSave()==true)
-                    startActivityForResult(new Intent(Memo_write.this, Memo_main.class), REQUEST_CODE_INSERT);
+                    startActivity(new Intent(Memo_write.this, Memo_main.class));
+                finish();
                 return true;
             case R.id.itemDeleted:
                 return true;
@@ -127,4 +175,3 @@ public class Memo_write extends AppCompatActivity {
         }
     }
 }
-
